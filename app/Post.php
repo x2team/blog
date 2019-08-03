@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use Carbon\Carbon;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Post extends Model
 {
@@ -32,6 +33,15 @@ class Post extends Model
         return is_null($this->published_at) ? '' : $this->published_at->diffForHumans();
     }
 
+    public function getBodyHtmlAttribute()
+    {
+        return $this->body ? Markdown::convertToHtml(e($this->body)) : NULL;
+    }
+    public function getExcerptHtmlAttribute()
+    {
+        return $this->excerpt ? Markdown::convertToHtml(e($this->excerpt)) : NULL;
+    }
+
 
     //Cau truc scope dung de su trung khi truy van ben Controller
     public function scopeLatestFirst($query) //su dung o ham index() ben BlogController
@@ -43,4 +53,5 @@ class Post extends Model
     {
         return $query->where('published_at', '<=', Carbon::now());
     }
+
 }

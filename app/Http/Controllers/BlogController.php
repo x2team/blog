@@ -19,4 +19,11 @@ class BlogController extends Controller
 
         // dd(\DB::getQueryLog());
     }
+
+    public function show($id)
+    {
+        $post = Post::findOrFail($id);
+
+        return view('blog.show', compact('post'));
+    }
 }

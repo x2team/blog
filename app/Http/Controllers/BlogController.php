@@ -9,8 +9,11 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        // \DB::enableQueryLog();
+        $posts = Post::with('author')->latestFirst()->simplePaginate(3);
 
         return view('blog.index', compact('posts'));
+
+        // dd(\DB::getQueryLog());
     }
 }

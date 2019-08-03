@@ -4,8 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class Post extends Model
 {
+    protected $dates = ['published_at'];
+
     public function author()
     {
         return $this->belongsTo(User::class);
@@ -23,12 +27,20 @@ class Post extends Model
         }
         return $imageUrl;
     }
+
     public function getDateAttribute(){
-        return $this->created_at->diffForHumans();
+        return is_null($this->published_at) ? '' : $this->published_at->diffForHumans();
     }
 
-    public function scopeLatestFirst()
+
+    //Cau truc scope dung de su trung khi truy van ben Controller
+    public function scopeLatestFirst($query) //su dung o ham index() ben BlogController
     {
-        return $this->orderBy('created_at', 'desc');
+        return $query->orderBy('created_at', 'desc');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<=', Carbon::now());
     }
 }

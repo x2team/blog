@@ -47,13 +47,13 @@ class Post extends Model
     }
 
 
-    //Cau truc scope dung de su trung khi truy van ben Controller
-    public function scopeLatestFirst($query) //su dung o ham index() ben BlogController
+    //Cau truc scope dung de su dung khi truy van ben Controller
+    public function scopeLatestFirst($query) //su dung o ham index() ben BlogController ->latestFirst()
     {
         return $query->orderBy('created_at', 'desc');
     }
 
-    public function scopePublished($query)
+    public function scopePublished($query) //->published()
     {
         return $query->where('published_at', '<=', Carbon::now());
     }

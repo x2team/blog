@@ -35,6 +35,7 @@ class PostsTableSeeder extends Seeder
                 'body'         => $faker->paragraphs(rand(10, 15), true),
                 'slug'         => $faker->slug(),
                 'image'        => rand(0, 1) == 1 ? $image : NULL,
+                'view_count'    => rand(1, 10)*10,
                 'created_at'   => clone($date), //$createdDate,
                 'updated_at'   => clone($date), //$createdDate,
                 'published_at' => $i < 5 ? $publishedDate : ( rand(0, 1) == 0 ? NULL : $publishedDate->addDays(4)),

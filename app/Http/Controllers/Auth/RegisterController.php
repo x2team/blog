@@ -69,4 +69,19 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    // Bee them vao
+    // public function showRegistrationForm()
+    // {
+    //     dd('123');
+    // }
+    // protected function registered(Request $request, $user)
+    // {
+    //     abort(404);
+    // }
+    // public function register(Request $request)
+    // {
+    //     abort(404);
+    // }
+    
 }

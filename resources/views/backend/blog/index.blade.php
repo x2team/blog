@@ -16,9 +16,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('/')}}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Blog</li>
-
+                    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('backend.blog.index') }}">Blog</a></li>
+                    <li class="breadcrumb-item active">All Posts</li>
                 </ol>
             </div>
         </div>
@@ -36,6 +36,14 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @if(session('message'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Hi!</strong> {{ session('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>

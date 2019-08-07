@@ -23,12 +23,4 @@ Auth::routes();
 
 Route::get('/home', 'Backend\HomeController@index')->name('home');
 
-Route::resource('/backend/blog', 'Backend\BlogController')->names([
-    'store' => 'backend.blog.store',
-    'index' => 'backend.blog.index',
-    'create' => 'backend.blog.create',
-    'update' => 'backend.blog.update',
-    'show' => 'backend.blog.show',
-    'destroy' => 'backend.blog.destroy',
-    'edit' => 'backend.blog.edit',
-]);
+Route::resource('/backend/blog', 'Backend\BlogController', ['as' => 'backend']);

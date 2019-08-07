@@ -8,7 +8,12 @@
 @import '~bootstrap/scss/bootstrap';
 
 //Admin Lte
+@import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
+@import '~admin-lte/plugins/datatables/dataTables.bootstrap4.css';
+@import '~admin-lte/plugins/select2/css/select2.min.css';
 @import '~admin-lte/dist/css/AdminLTE.css';
+
+
 
 // @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 // @import "~@fortawesome/fontawesome-free/scss/solid.scss";

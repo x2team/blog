@@ -4,7 +4,54 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+    require('./bootstrap');
+
+    require('admin-lte/plugins/jquery/jquery');
+    require('admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js');
+    require('admin-lte/plugins/select2/js/select2.full.min.js');
+
+    require('admin-lte/plugins/datatables/jquery.dataTables.js');
+    require('admin-lte/plugins/datatables/dataTables.bootstrap4.js');
+
+    require('admin-lte/plugins/fastclick/fastclick.js');
+    require('admin-lte/dist/js/adminlte.min.js');
+    require('admin-lte/dist/js/demo.js');
+
+    
+  $(document).ready(function() {
+        //dataTables
+          $("#example1").DataTable({
+            "lengthMenu": [3, 25, 50, "All"],
+            "order": [[4, "asc"]],
+            // "pagingType": "simple",
+            "language": {
+              "paginate": {
+                "previous": "<",
+                "next": ">",
+              }
+            }
+          });
+          $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
+          });
+
+        //Select 2
+        $('.select2').select2({
+          theme: "default",
+        });
+        
+  });
+
+
+
+    
+    
 
 
 window.Vue = require('vue');

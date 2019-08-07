@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="pull-left">
-                        <a href="{{ route('backend.blog.create') }}" class="btn btn-success">Add New</a>
+                        
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -39,7 +39,8 @@
                     
                     {{ Form::model($post, [
                         'method' => 'POST',
-                        'route' => 'backend.blog.store'
+                        'route' => 'backend.blog.store',
+                        'files' => TRUE,
                     ]) }}
 
                         
@@ -84,6 +85,13 @@
                             <span class="invalid-feedback">{{ $errors->first('category_id') }}</span>
                         @enderror
                     </div>
+                    <div class="form-group">
+                            {{ Form::label('image', 'Feature Image') }}
+                            {{ Form::file('image', ['class' => 'form-control ' . ($errors->has('image') ? 'is-invalid' : '')]) }}
+                            @error('image')
+                                <span class="invalid-feedback">{{ $errors->first('image') }}</span>
+                            @enderror
+                        </div>
                     
                     {!! Form::submit('Create new post', ['class' => 'btn btn-primary']) !!}
 

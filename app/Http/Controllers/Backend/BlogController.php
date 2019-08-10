@@ -62,8 +62,6 @@ class BlogController extends BackendController
     {
         $data = $request->all();
         
-
-
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
@@ -73,7 +71,6 @@ class BlogController extends BackendController
             $watermark = Image::make($this->watermarkPath."/watermark.png");
             $interventionImage = Image::make($image);
             $successUpload = $interventionImage->insert($watermark, 'bottom-right', 10, 10)->save($destination . "/" . $fileName);
-
 
             // $successUpload = $image->move($destination, $fileName);
 
@@ -112,7 +109,8 @@ class BlogController extends BackendController
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('backend.blog.edit', compact('post'));
     }
 
     /**
@@ -122,9 +120,12 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        $post     = Post::findOrFail($id);
+        $data     = $this->handleRequest($request);
+        $post->update($data);
+        return redirect()->route('backend.blog.index')->with('message', 'Your post was updated successfully!');
     }
 
     /**

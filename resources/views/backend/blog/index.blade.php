@@ -36,14 +36,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    @if(session('message'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Hi!</strong> {{ session('message') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
+                    @include('backend.blog._message')
+
                     <table id="post" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -58,12 +52,17 @@
                             @foreach($posts as $post)
                             <tr>
                                 <td>
-                                    <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('backend.blog.destroy', $post->id) }}" class="btn btn-xs btn-danger">
-                                            <i class="fa fa-times"></i>
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['backend.blog.destroy', $post->id]]) !!}
+                                        <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
+                                            <i class="fa fa-edit"></i>
                                         </a>
+                                        {{-- <a href="{{ route('backend.blog.destroy', $post->id) }}" class="btn btn-xs btn-danger">
+                                            <i class="fa fa-times"></i>
+                                        </a> --}}
+                                        <button type="submit" class="btn btn-xs btn-danger">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    {!! Form::close() !!}
                                 </td>
                                
                                 <td>{{ $post->title }}</td>

@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="pull-left">
-                        <a href="{{ route('backend.blog.create') }}" class="btn btn-success">Add New</a>
+                        <a href="{{ route('backend.blog.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -44,7 +44,7 @@
                             </button>
                         </div>
                     @endif
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="post" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th width="80">Action</th>

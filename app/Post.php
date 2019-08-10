@@ -71,9 +71,9 @@ class Post extends Model
 
     public function dateFormatted($showTimes = false)
     {
-        $format = "d/m/Y";
-        if($showTimes) $format = $format . " H:i:s";
-            return $this->created_at->format($format);
+        $format = "Y/m/d";
+        if ($showTimes) $format = $format . " H:i:s";
+        return $this->created_at->format($format);
     }
 
     public function publicActionLabel()

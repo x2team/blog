@@ -12,11 +12,13 @@ use Intervention\Image\Facades\Image;
 class BlogController extends BackendController
 {
     protected $uploadPath;
+    protected $watermarkPath;
 
     public function __construct()
     {
         parent::__construct();
         $this->uploadPath = public_path(config('cms.image.directory'));
+        $this->watermarkPath = public_path(config('cms.image.watermarkPath'));
     }
     /**
      * Display a listing of the resource.
@@ -59,14 +61,21 @@ class BlogController extends BackendController
     public function handleRequest($request)
     {
         $data = $request->all();
+        
+
 
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
-            
             $destination = $this->uploadPath;
 
-            $successUpload = $image->move($destination, $fileName);
+            //watermark
+            $watermark = Image::make($this->watermarkPath."/watermark.png");
+            $interventionImage = Image::make($image);
+            $successUpload = $interventionImage->insert($watermark, 'bottom-right', 10, 10)->save($destination . "/" . $fileName);
+
+
+            // $successUpload = $image->move($destination, $fileName);
 
             if($successUpload){
                 $width = config('cms.image.thumbnail.width');

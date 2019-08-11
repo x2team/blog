@@ -24,4 +24,5 @@ Auth::routes();
 Route::get('/home', 'Backend\HomeController@index')->name('home');
 
 Route::put('/backend/blog/restore/{blog}', 'Backend\BlogController@restore')->name('backend.blog.restore');
+Route::delete('/backend/blog/force-destroy/{blog}', 'Backend\BlogController@forceDestroy')->name('backend.blog.force-destroy');
 Route::resource('/backend/blog', 'Backend\BlogController', ['as' => 'backend']);

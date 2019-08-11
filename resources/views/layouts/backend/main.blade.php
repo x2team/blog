@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css">
     <!-- Summernote 0.8.12 -->
     <link rel="stylesheet" href="{{ asset('public/backend/plugins/summernote/summernote-bs4.css') }}">
+    <!-- Custom by BeeSupper -->
+    <link rel="stylesheet" href="{{ asset('public/backend/dist/css/custom.css') }}">
 
 
     <!-- Styles -->

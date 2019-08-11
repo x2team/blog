@@ -35,8 +35,15 @@
                     </div>
 
                     <div class="float-right" style="padding: 7px 0;">
-                        <a href="?status=all">All</a> |
-                        <a href="?status=trash">Trash</a>
+                        @foreach($statusList as $key => $value)
+                            @if($value)
+                                <?php $selected = Request::get('status') == $key ? 'selected-status' : '' ?>
+                                <?php $links[] = "<a class='{$selected}' href='?status={$key}'>" . ucwords($key) . "({$value})<a/>" ?>
+                            @endif
+                        @endforeach
+                        
+                        {!! implode(' | ', $links) !!}            
+
                     </div>
                 </div>
                 <!-- /.card-header -->

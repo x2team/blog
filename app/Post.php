@@ -87,7 +87,7 @@ class Post extends Model
             return '<span class="badge bg-info">Schedule</span>';
         }
         else{
-            return '<span class="badge bg-info">Published</span>';
+            return '<span class="badge bg-success">Published</span>';
         }
     }
 
@@ -100,10 +100,20 @@ class Post extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
-    public function scopePublished($query) //->published()
+    public function scopePublished($query) //->published()->get()
     {
         return $query->where('published_at', '<=', Carbon::now());
     }
+    public function scopeScheduled($query) 
+    {
+        return $query->where('published_at', '>', Carbon::now());
+    }
+    public function scopeDraft($query)
+    {
+        return $query->whereNull('published_at');
+    }
+
+
 
     public function scopePopular($query)
     {

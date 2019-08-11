@@ -30,7 +30,7 @@
             <td>{{ $post->category->title}}</td>
             <td>
                 <abbr title="{{ $post->dateFormatted(true)}}">{{ $post->dateFormatted() }}</abbr>
-                
+                <span class="badge bg-warning">Draft</span>
             </td>
         </tr>
         @endforeach

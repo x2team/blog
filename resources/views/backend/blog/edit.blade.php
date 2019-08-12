@@ -31,10 +31,12 @@
     'id' => 'post-form'
 ]) }}
 <section class="content">
-    <div class="row">
+    <div class="container-fluid">
+        <div class="row">
 
-        @include('backend.blog._form')
-        
+            @include('backend.blog._form')
+            
+        </div>
     </div>
 </section>
 {{ Form::close() }}

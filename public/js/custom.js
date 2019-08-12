@@ -1,7 +1,4 @@
 $(document).ready(function() {
-    
-  // global.$ = global.jQuery = require('jquery');
-  // window.$ = window.jQuery = require('jquery'); //v3.4.1
   
   //dataTables
       $("#post").DataTable({
@@ -14,6 +11,7 @@ $(document).ready(function() {
           }
         }
       });
+      
       $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,

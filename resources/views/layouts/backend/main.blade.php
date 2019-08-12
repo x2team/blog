@@ -125,7 +125,7 @@
     {{-- <script src="{{ asset('public/js/app.js') }}" defer></script> --}}
 
 
-    
+    @yield('script')
 
 </body>
 </html>

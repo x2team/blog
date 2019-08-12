@@ -48,7 +48,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    @include('backend.blog._message')
+                    @include('backend.shared._message')
 
                     @if($onlyTrashed) 
                         @include('backend.blog._table-trash')

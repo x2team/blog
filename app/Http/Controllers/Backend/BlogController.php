@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-// use App\Http\Controllers\Controller;
+// use App\Http\Controllers\Controller; //bo dong nay van ok do dc ke thua tu BackendController
 use App\Post;
 use App\Http\Requests\PostRequest;
 use Intervention\Image\Facades\Image;

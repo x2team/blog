@@ -22,5 +22,9 @@ return [
                 'height' => 400
             ],
         ]
-    ]
+    ],
+
+    'default_category_id' => 3,
+
+
 ];

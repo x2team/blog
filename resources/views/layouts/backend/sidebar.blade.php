@@ -86,6 +86,16 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('backend.user.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
                     <a class="dropdown-item nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt"></i>

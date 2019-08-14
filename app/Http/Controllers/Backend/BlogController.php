@@ -41,17 +41,21 @@ class BlogController extends BackendController
         elseif($status == 'draft'){
             $posts = Post::draft()->latest()->get();
         }
+        elseif($status == 'own'){
+            $posts = request()->user()->posts()->get();
+        }
         else{
             $posts = Post::latest()->get();
         }        
 
-        $statusList = $this->statusList();
+        $statusList = $this->statusList($request);
         return view('backend.blog.index', compact('posts', 'onlyTrashed', 'statusList'));
     }
 
-    private function statusList()
+    private function statusList($request)
     {
         return [
+            'own' => $request->user()->posts()->count(),
             'all' => Post::count(),
             'published' => Post::published()->count(),
             'scheduled' => Post::scheduled()->count(),

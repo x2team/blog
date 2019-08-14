@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+
 
 use App\Http\Requests;
 use App\User;
@@ -41,8 +44,8 @@ class UserController extends BackendController
      */
     public function store(Requests\UserStoreRequest $request)
     {
-        // \DB::connection()->enableQueryLog();
         $user = User::create($request->all());
+        $user->attachRole($request->role);
 
         return redirect()->route('backend.user.index')->with('message', 'New user was created successfully');
     }
@@ -80,7 +83,11 @@ class UserController extends BackendController
      */
     public function update(Requests\UserUpdateRequest $request, $id)
     {
-        $user = User::findOrFail($id)->update( !isset($request->password) ? $request->except(['password']) : $request->all());
+        $user = User::findOrFail($id);
+        $user->update( !isset($request->password) ? $request->except(['password']) : $request->all());
+
+        $user->detachRoles();
+        $user->attachRole($request->role);
         
         return redirect()->route('backend.user.index')->with('message', 'New user was updated successfully');
 

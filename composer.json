@@ -14,7 +14,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.8"
+        "laravelcollective/html": "^5.8",
+        "santigarcor/laratrust": "5.2.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -42,6 +43,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers/permissions.php"
         ]
     },
     "autoload-dev": {

@@ -13,13 +13,25 @@
         <tr>
             <td>
                 {!! Form::open(['method' => 'DELETE', 'route' => ['backend.blog.destroy', $post->id]]) !!}
-                <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
-                    <i class="fa fa-edit"></i>
-                </a>
+                @if(check_user_permissions(request(), 'Blog@edit', $post->id))
+                    <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                @else
+                    <a href="#" class="btn btn-xs btn-default disabled">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                @endif
                 
-                <button type="submit" class="btn btn-xs btn-warning">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+                @if(check_user_permissions(request(), 'Blog@destroy', $post->id))
+                    <button type="submit" class="btn btn-xs btn-warning">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                @else
+                    <button type="button" onclick="return false;" class="btn btn-xs btn-warning disabled">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                @endif
                 {!! Form::close() !!}
             </td>
 

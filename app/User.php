@@ -6,9 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use Notifiable;
 
     /**
@@ -67,5 +69,23 @@ class User extends Authenticatable
         // $size = 32;
 
         return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if (!empty($value)) $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getLabelUserAttribute()
+    {
+        if($this->hasRole('admin')){
+            return '<span class="right badge badge-danger">Administrator</span>';
+        }
+        elseif($this->hasRole('editor')){
+            return '<span class="right badge badge-warning">Supper Moderator</span>';
+        }
+        else{
+            return '<span class="right badge badge-light">User</span>';
+        }
     }
 }

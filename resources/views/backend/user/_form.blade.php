@@ -16,18 +16,9 @@
                 <span class="invalid-feedback">{{ $errors->first('name') }}</span>
                 @enderror
             </div>
-
-            {{-- <div class="form-group">
-                {{ Form::label('slug') }}
-                {{ Form::text('slug', null, ['class' => 'form-control ' . ($errors->has('slug') ? 'is-invalid' : '')]) }}
-                @error('slug')
-                <span class="invalid-feedback">{{ $errors->first('slug') }}</span>
-                @enderror
-            </div> --}}
-
             <div class="form-group">
                 <label for="slug">Slug</label>
-                <input type="text" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" id="slug" name="slug" placeholder="Enter slug">
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug', $user->slug) }}" id="slug" name="slug" placeholder="Enter slug">
                 @error('slug')
                     <span class="invalid-feedback">{{ $errors->first('slug') }}</span>
                 @enderror
@@ -37,21 +28,42 @@
                 {{ Form::label('email') }}
                 {{ Form::text('email', null, ['class' => 'form-control ' . ($errors->has('email') ? 'is-invalid' : '')]) }}
                 @error('email')
-                <span class="invalid-feedback">{{ $errors->first('email') }}</span>
+                    <span class="invalid-feedback">{{ $errors->first('email') }}</span>
                 @enderror
             </div>
             <div class="form-group">
                 {{ Form::label('password') }}
                 {{ Form::password('password', ['class' => 'form-control ' . ($errors->has('password') ? 'is-invalid' : '')]) }}
                 @error('password')
-                <span class="invalid-feedback">{{ $errors->first('password') }}</span>
+                    <span class="invalid-feedback">{{ $errors->first('password') }}</span>
                 @enderror
             </div>
             <div class="form-group">
                 {{ Form::label('password_confirmation') }}
                 {{ Form::password('password_confirmation', ['class' => 'form-control ' . ($errors->has('password_confirmation') ? 'is-invalid' : '')]) }}
                 @error('password_confirmation')
-                <span class="invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
+                    <span class="invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                {{ Form::label('role') }}
+                @if($user->exists && ($user->id == config('cms.default_user_id') || isset($hideRoleDropdown)))
+                    {!! Form::hidden('role', $user->roles->first()->id) !!}
+                    <p class="form-control-static">{{ $user->roles->first()->display_name }}</p>
+                @else
+                    {{ Form::select('role', App\Role::pluck('display_name', 'id'), $user->exists ? $user->roles->first()->id : null, ['class' => 'form-control ' . ($errors->has('role') ? 'is-invalid' : ''), 'placeholder' => 'Choose a role']) }}
+                @endif
+                
+                @error('role')
+                    <span class="invalid-feedback">{{ $errors->first('role') }}</span>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea class="form-control @error('bio') is-invalid @enderror" id="bio" name="bio" placeholder="Enter..." rows="5">{{ old('bio', $user->bio) }}</textarea>
+                @error('bio')
+                    <span class="invalid-feedback">{{ $errors->first('bio') }}</span>
                 @enderror
             </div>
 

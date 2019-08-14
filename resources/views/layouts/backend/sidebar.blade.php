@@ -15,7 +15,8 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{route('account.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
+                {!! Auth::user()->label_user !!}
             </div>
         </div>
 
@@ -76,6 +77,7 @@
                     </ul>
                 </li>
 
+                @if (check_user_permissions(request(), "Categories@index"))
                 <li class="nav-item">
                     <a href="{{ route('backend.categories.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-folder"></i>
@@ -84,7 +86,9 @@
                         </p>
                     </a>
                 </li>
+                @endif
 
+                @if (check_user_permissions(request(), "User@index"))
                 <li class="nav-item">
                     <a href="{{ route('backend.user.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
@@ -93,6 +97,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
 
 
                 <li class="nav-item">

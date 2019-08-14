@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\User;
+use App\Tag;
 
 class BlogController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('author')
+        $posts = Post::with(['author', 'category', 'tags'])
                     ->latestFirst()
                     ->published()
                     ->filter(request('term'))
@@ -30,31 +31,34 @@ class BlogController extends Controller
     public function category(Category $category)
     {
         $categoryName = $category->title;
-
-        // \DB::enableQueryLog();
         $posts = $category->posts()
                         ->with('author')
                         ->latestFirst()
                         ->published()
                         ->simplePaginate(3);
-
-        // dd(\DB::getQueryLog);
         return view("blog.index", compact('posts', 'categoryName'));
-
-        //  dd(\DB::getQueryLog());
     }
 
     public function author(User $author)
     {
         $authorName = $author->name;
-
-        // \DB::enableQueryLog();
         $posts = $author->posts()
-                        ->with('category')
+                        ->with(['category', 'tags'])
                         ->latestFirst()
                         ->published()
                         ->simplePaginate(3);
-
         return view("blog.index", compact('posts', 'authorName'));    
+    }
+
+    public function tag(Tag $tag)
+    {
+        $tagName = $tag->name;
+        $posts = $tag->posts()
+                        ->with(['category', 'author'])
+                        ->latestFirst()
+                        ->published()
+                        ->simplePaginate(5);
+
+        return view("blog.index", compact('posts', 'tagName'));
     }
 }

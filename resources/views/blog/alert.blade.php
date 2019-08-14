@@ -15,3 +15,9 @@
     <p>Search Results for: <strong>{{ $term}}</strong></p>
 </div>
 @endif
+
+@if(isset($tagName))
+<div class="alert alert-info">
+    <p>Tagged: <strong>{{ $tagName }}</strong></p>
+</div>
+@endif

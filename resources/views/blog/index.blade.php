@@ -9,17 +9,8 @@
                     <p>Nothing</p>
                 </div>
             @else
-                @if(isset($categoryName))
-                    <div class="alert alert-info">
-                        <p>Category: <strong>{{ $categoryName}}</strong></p>
-                    </div>
-                @endif
-
-                @if(isset($authorName))
-                    <div class="alert alert-info">
-                        <p>Author: <strong>{{ $authorName}}</strong></p>
-                    </div>
-                @endif
+                
+                @include('blog.alert')
 
                 @foreach($posts as $post)
                     <article class="post-item">
@@ -57,7 +48,7 @@
             
 
             <nav>
-                {{ $posts->links() }}
+                {{ $posts->appends(request()->only(['term']))->links() }}
             </nav>
         </div>
         

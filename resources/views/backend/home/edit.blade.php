@@ -27,7 +27,10 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            @include('backend.shared._message')
+            <div class="col-9">
+                    @include('backend.shared._message')
+            </div>
+            
             {{ Form::model($user, [
                 'method' => 'PUT',
                 'route' => ['account.edit'],

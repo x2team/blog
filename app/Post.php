@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image', 'image_path'];
     protected $dates = ['published_at'];
 
     public function author()
@@ -35,12 +36,13 @@ class Post extends Model
     public function getImageUrlAttribute()
     {
         $imageUrl = "";
-        $directory = config('cms.image.directory');
+        // $directory = config('cms.image.directory');
+        $directory = "2019/08";
         if(! \is_null($this->image)){
             $imagePath = \public_path() . "/{$directory}/" . $this->image;
             
             if(file_exists($imagePath)){
-                $imageUrl = asset("public/frontend/img/". $this->image);
+                $imageUrl = asset("{$directory}". $this->image);
             }
         }
         return $imageUrl;
@@ -102,6 +104,27 @@ class Post extends Model
         else{
             return '<span class="badge bg-success">Published</span>';
         }
+    }
+
+    public function createTags($tagString)
+    {
+        $tags = explode(",", $tagString);
+
+        $tagIds = [];
+
+        foreach ($tags as $tag) {
+            if(!empty(trim($tag))){
+                $newTag = Tag::firstOrCreate(
+                    ['name' => ucwords(trim($tag))], ['slug' => Str::slug($tag)]
+                );
+                
+                $tagIds[] = $newTag->id;
+            }
+            
+        }
+
+        $this->tags()->detach();
+        $this->tags()->attach($tagIds);
     }
 
 

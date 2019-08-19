@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 // use App\Http\Controllers\Controller; //bo dong nay van ok do dc ke thua tu BackendController
 use App\Post;
+use App\Tag;
 use App\Http\Requests\PostRequest;
+use Carbon\Carbon;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class BlogController extends BackendController
@@ -17,6 +21,7 @@ class BlogController extends BackendController
     public function __construct()
     {
         parent::__construct();
+        
         $this->uploadPath = public_path(config('cms.image.directory'));
         $this->watermarkPath = public_path(config('cms.image.watermarkPath'));
     }
@@ -80,45 +85,90 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
+        
+        $data = $this->handleRequest2($request);
 
-        $data = $this->handleRequest($request);
-
-        $request->user()->posts()->create($data);
+        $newPost = $request->user()->posts()->create($data);
+        
+        $newPost->createTags($data['post_tags']);
 
         return redirect()->route('backend.blog.index')->with('message', 'Your post was created successfully!');
     }
 
-    public function handleRequest($request)
-    {
+    // public function handleRequest($request)
+    // {   
+    //     $data = $request->all();
+        
+    //     if($request->hasFile('image')){
+    //         $image = $request->file('image');
+    //         $fileName = $image->getClientOriginalName();
+    //         $extension = $image->getClientOriginalExtension();
+
+    //         $fileName = Str::slug(str_replace(".{$extension}", "", $fileName));
+    //         $fileName = $fileName . "_" . uniqid();
+
+    //         $destination = $this->uploadPath;
+
+            
+    //         //watermark
+    //         $watermark = Image::make($this->watermarkPath."/watermark.png");
+    //         $interventionImage = Image::make($image);
+    //         $successUpload = $interventionImage->insert($watermark, 'bottom-right', 10, 10)->save($destination . "/" . $fileName);
+
+    //         // $successUpload = $image->move($destination, $fileName);
+
+    //         if($successUpload){
+    //             // $width = config('cms.image.thumbnail.width');
+    //             // $heigth = config('cms.image.thumbnail.height');
+    //             // $extension = $image->getClientOriginalExtension();
+    //             // $thumbnail = str_replace(".{$extension}", "_thumb.{$extension}", $fileName);
+    //             // Image::make($destination . '/' . $fileName)
+    //             //     ->resize($width, $heigth)
+    //             //     ->save($destination . '/' . $thumbnail);
+    //         }
+
+    //         $data['image'] = $fileName;
+    //     }
+
+    //     return $data;
+    // }
+
+    public function handleRequest2($request)
+    {   
         $data = $request->all();
         
         if($request->hasFile('image')){
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
-            $destination = $this->uploadPath;
+            $extension = $image->getClientOriginalExtension();
 
-            //watermark
+            $fileName = Str::slug(str_replace(".{$extension}", "", $fileName));
+            $fileName = $fileName . "_" . uniqid() . ".{$extension}";
+
+            // $destination = $this->uploadPath;
+
+            
+            // insert watermark
             $watermark = Image::make($this->watermarkPath."/watermark.png");
             $interventionImage = Image::make($image);
-            $successUpload = $interventionImage->insert($watermark, 'bottom-right', 10, 10)->save($destination . "/" . $fileName);
+            $interventionImage->insert($watermark, 'bottom-right', 10, 10);//->save($destination . "/" . $fileName);
 
-            // $successUpload = $image->move($destination, $fileName);
+            
+            $directory = date("Y") . '/' . date("m");
+            $image->storeAs($directory, $fileName ,'public', 0775, true);
+            
 
-            if($successUpload){
-                $width = config('cms.image.thumbnail.width');
-                $heigth = config('cms.image.thumbnail.height');
-                $extension = $image->getClientOriginalExtension();
-                $thumbnail = str_replace(".{$extension}", "_thumb.{$extension}", $fileName);
-                Image::make($destination . '/' . $fileName)
-                    ->resize($width, $heigth)
-                    ->save($destination . '/' . $thumbnail);
-            }
+            // Storage::makeDirectory("/{$directory}/", 0777, true);
+            // $files = Storage::allFiles($directory);
+
 
             $data['image'] = $fileName;
+            $data['image_path'] = $directory;
         }
 
+        // dd(asset('/uploads'));
         return $data;
     }
 
@@ -141,8 +191,13 @@ class BlogController extends BackendController
      */
     public function edit($id)
     {
+        
         $post = Post::findOrFail($id);
-        return view('backend.blog.edit', compact('post'));
+        $tags = Tag::pluck('name');
+        
+        dd(asset("{$post->image_path}")."/". $post->image);
+
+        return view('backend.blog.edit', compact('post', 'tags'));
     }
 
     /**
@@ -152,13 +207,18 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        // dd($request->all());die;
+
         $post     = Post::findOrFail($id);
         $oldImage = $post->image;
 
-        $data     = $this->handleRequest($request);
+        $data     = $this->handleRequest2($request);
+        
         $post->update($data);
+        $post->createTags($data['post_tags']);
+
         if($oldImage !== $post->image){
             $this->removeImage($oldImage);
         }
@@ -184,6 +244,7 @@ class BlogController extends BackendController
         $post->forceDelete();
 
         $this->removeImage($post->image);
+        $post->tags()->detach();//xoa tat ca tag
 
         return redirect('/backend/blog?status=trash')->with('message', 'Your post has been deleted successfully');
     }

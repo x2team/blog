@@ -17,10 +17,10 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('author_id')->nullable();
             $table->foreign('author_id')->references('id')->on('users')->onDelete('restrict');
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('excerpt');
-            $table->text('body');
+            $table->string('title')->nullable();
+            $table->string('slug')->unique()->nullable();
+            $table->longText('excerpt')->nullable();
+            $table->text('body')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

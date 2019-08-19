@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            @include('backend.blog._form')
+            @include('backend.blog._form', ['btnText' => 'Edit post'])
             
         </div>
     </div>
@@ -42,8 +42,5 @@
 {{ Form::close() }}
 @endsection
 
-{{-- @section('script')
-    <script>
-        $("footer.main-footer").addClass("pagination-sm");
-    </script>
-@endsection --}}
+@include('backend.blog._script')
+

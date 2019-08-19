@@ -1,26 +1,6 @@
 $(document).ready(function() {
   
-  //dataTables
-      $("#post").DataTable({
-        "lengthMenu": [10, 25, 50, "All"],
-        "order": [[ 4, "desc" ]],
-        "language": {
-          "paginate": {
-            // "previous": "<",
-            // "next": ">",
-          }
-        }
-      });
       
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
-      });
 
     //Select 2
     $('.select2').select2({
@@ -85,26 +65,8 @@ $(document).ready(function() {
 
     });
 
-    //Summernote
-    $('#excerpt').summernote({
-        height: 300,
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']],
-            ['fontsize', ['fontsize']],
-          ],
-       
-    });
+    
 
-    $('#draft-btn').click(function (e) {
-      e.preventDefault();
-      $('#post-form').submit();
-    });
+    
     
 });

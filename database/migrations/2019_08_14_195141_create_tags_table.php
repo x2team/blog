@@ -24,6 +24,10 @@ class CreateTagsTable extends Migration
             $table->integer('post_id');
             $table->integer('tag_id');
             $table->primary(['post_id', 'tag_id']);
+
+            //Xoa post se xoa tat ca tags, hoac co the detach() sau khi xoa
+            // $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            // $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
         });
     }
 

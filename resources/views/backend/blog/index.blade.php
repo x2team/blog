@@ -65,8 +65,4 @@
 </section>
 @endsection
 
-{{-- @section('script')
-    <script>
-        $("footer.main-footer").addClass("pagination-sm");
-    </script>
-@endsection --}}
+@include('backend.blog._script')

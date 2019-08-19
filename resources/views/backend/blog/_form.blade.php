@@ -85,24 +85,39 @@
                     <a href="#" id="draft-btn" class="btn btn-outline-secondary">Save draft</a>
                 </div>
                 <div class="float-right">
-                    {!! Form::submit('Create new post', ['class' => 'btn btn-primary']) !!}
+                    {!! Form::submit($btnText, ['class' => 'btn btn-primary']) !!}
                 </div>
             </div>
         </div>
 
         <div class="card card-default">
-                <div class="card-header">
-                    <h3 class="card-title">Categories</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        {{ Form::select('category_id', App\Category::pluck('title', 'id'), null, ['class' => 'form-control ' . ($errors->has('category_id') ? 'is-invalid' : '')]) }}
-                        @error('category_id')
-                        <span class="invalid-feedback">{{ $errors->first('category_id') }}</span>
-                        @enderror
-                    </div>
+            <div class="card-header">
+                <h3 class="card-title">Categories</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    {{ Form::select('category_id', App\Category::pluck('title', 'id'), null, ['class' => 'form-control ' . ($errors->has('category_id') ? 'is-invalid' : '')]) }}
+                    @error('category_id')
+                    <span class="invalid-feedback">{{ $errors->first('category_id') }}</span>
+                    @enderror
                 </div>
             </div>
+        </div>
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Tags</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">                
+                    {!! Form::text('post_tags', null, ['class' => 'form-control']) !!}              
+                </div>
+
+                {{-- <div class="form-group">
+                    <input name="post_tags" value="" type="text" class="form-control" id="post_tags" placeholder="Enter tags...">
+                </div> --}}
+            </div>
+        </div>
+
 
         <div class="card card-default">
             <div class="card-header">
@@ -112,7 +127,7 @@
                 <div class="form-group">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-new img-thumbnail" style="width: 200px; height: 150px;">
-                            <img src="{{ ($post->image_thumb_url) ? $post->image_thumb_url : 'https://place-hold.it/200x150?text=No+Image' }}" alt="...">
+                            <img src="{{ ($post->image_url) }}" alt="...">
                         </div>
                         <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px; max-height: 150px;">
                         </div>

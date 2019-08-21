@@ -153,7 +153,7 @@ class BlogController extends BackendController
             // insert watermark
             $watermark = Image::make($this->watermarkPath."/watermark.png");
             $interventionImage = Image::make($image);
-            $interventionImage->insert($watermark, 'bottom-right', 10, 10);//->save($destination . "/" . $fileName);
+            $interventionImage->insert($watermark, 'bottom-right', 10, 10)->save();//->save($destination . "/" . $fileName);
 
             
             $directory = date("Y") . '/' . date("m");
@@ -195,7 +195,7 @@ class BlogController extends BackendController
         $post = Post::findOrFail($id);
         $tags = Tag::pluck('name');
         
-        dd(asset("{$post->image_path}")."/". $post->image);
+        // dd(asset("{$post->image_path}")."/". $post->image);
 
         return view('backend.blog.edit', compact('post', 'tags'));
     }
@@ -213,14 +213,15 @@ class BlogController extends BackendController
 
         $post     = Post::findOrFail($id);
         $oldImage = $post->image;
+        $oldImagePath = $post->image_path;
 
         $data     = $this->handleRequest2($request);
-        
+        $a = Str::slug('123');
         $post->update($data);
         $post->createTags($data['post_tags']);
 
         if($oldImage !== $post->image){
-            $this->removeImage($oldImage);
+            $this->removeImage($oldImagePath, $oldImage);
         }
         return redirect()->route('backend.blog.index')->with('message', 'Your post was updated successfully!');
     }
@@ -243,7 +244,7 @@ class BlogController extends BackendController
         $post = Post::withTrashed()->findOrFail($id);
         $post->forceDelete();
 
-        $this->removeImage($post->image);
+        $this->removeImage($post->image_path, $post->image);
         $post->tags()->detach();//xoa tat ca tag
 
         return redirect('/backend/blog?status=trash')->with('message', 'Your post has been deleted successfully');
@@ -257,16 +258,16 @@ class BlogController extends BackendController
         return redirect()->back()->with('message', 'Your post has been moved from Trash');
     }
 
-    public function removeImage($image)
+    public function removeImage($imagePath, $image)
     {
         if( ! empty($image)){
-            $imagePath = $this->uploadPath . '/' . $image;
-            $ext = substr(strrchr($image, '.'), 1);
-            $thumbnail = str_replace(".{$ext}", "_thumb.{$ext}", $image);
-            $thumbnailPath = $this->uploadPath . '/' . $thumbnail;
-
-            if( file_exists($imagePath)) unlink($imagePath);
-            if( file_exists($thumbnailPath)) unlink($thumbnailPath);
+            $imageFilePath = $this->uploadPath . '/' . $imagePath ."/". $image;
+            // $ext = substr(strrchr($image, '.'), 1);
+            // $thumbnail = str_replace(".{$ext}", "_thumb.{$ext}", $image);
+            // $thumbnailPath = $this->uploadPath . '/' . $thumbnail;
+            // dd($imageFilePath);
+            if( file_exists($imageFilePath)) unlink($imageFilePath);
+            // if( file_exists($thumbnailPath)) unlink($thumbnailPath);
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 return [
     'image' => [
-        'directory' => 'frontend/img',
+        'directory' => 'storage',
         'watermarkPath' => 'img',
         'thumbnail' => [
             'width' => 250,

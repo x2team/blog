@@ -37,14 +37,16 @@ class Post extends Model
     {
         $imageUrl = "";
         // $directory = config('cms.image.directory');
-        $directory = "2019/08";
+        $directory = $this->image_path;
+        
         if(! \is_null($this->image)){
-            $imagePath = \public_path() . "/{$directory}/" . $this->image;
+            $imagePath = \public_path() . "/storage/{$directory}/" . $this->image;
             
             if(file_exists($imagePath)){
-                $imageUrl = asset("{$directory}". $this->image);
+                $imageUrl = asset("/storage/{$directory}/". $this->image);
             }
         }
+        // dd($imageUrl);
         return $imageUrl;
     }
     public function getImageThumbUrlAttribute()

@@ -25,6 +25,21 @@
                 </div>
 
                 <div class="form-group">
+                    <div class="input-group" data-target-input="nearest">
+                        <div class="input-group-prepend" data-target="#published_at2" data-toggle="datetimepicker">
+                            <span class="input-group-text">
+                                <i class="far fa-calendar-alt"></i>
+                            </span>
+                        </div>
+                        <input id="published_at2"  type="text" class="form-control datetimepicker-input" data-target="#published_at2"/>
+                        @error('published_at2')
+                            <span class="invalid-feedback">{{ $errors->first('published_at2') }}</span>
+                        @enderror
+                    </div>
+                    
+                </div>
+
+                <div class="form-group">
                     {{ Form::label('excerpt') }}
                     {{ Form::textarea('excerpt', null, ['class' => 'form-control ' . ($errors->has('excerpt') ? 'is-invalid' : '')]) }}
                 </div>
@@ -65,14 +80,15 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    {{ Form::label('published_at', 'Publish Date:') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
+                    {{-- {{ Form::label('published_at', 'Publish Date:') }} --}}
+                    <div class="input-group" data-target-input="nearest">
+                        <div class="input-group-prepend" data-target="#published_at" data-toggle="datetimepicker">
                             <span class="input-group-text">
                                 <i class="far fa-calendar-alt"></i>
                             </span>
                         </div>
-                        {{ Form::text('published_at', null, ['class' => 'form-control ' . ($errors->has('published_at') ? 'is-invalid' : ''), 'placeholder' => 'Y-m-d H:i:s']) }}
+                        <input id="published_at"  type="text" class="form-control datetimepicker-input" data-target="#published_at"/>
+                        {{-- {{ Form::text('published_at', null, ['class' => 'form-control ' . ($errors->has('published_at') ? 'is-invalid' : ''), 'placeholder' => 'Y-m-d H:i:s', 'data-toggle' => 'datatimepicker', 'data-target' => '#published_at']) }} --}}
                         @error('published_at')
                             <span class="invalid-feedback">{{ $errors->first('published_at') }}</span>
                         @enderror
@@ -108,13 +124,14 @@
                 <h3 class="card-title">Tags</h3>
             </div>
             <div class="card-body">
-                <div class="form-group">                
+                {{-- <div class="form-group">                
                     {!! Form::text('post_tags', null, ['class' => 'form-control']) !!}              
-                </div>
-
-                {{-- <div class="form-group">
-                    <input name="post_tags" value="" type="text" class="form-control" id="post_tags" placeholder="Enter tags...">
                 </div> --}}
+
+                <div class="form-group">
+                    <input name="post_tags" type="text" id="post_tags" placeholder="Enter tags...">
+                    {{-- <select name="post_tags"  id="post_tags" placeholder="Enter tags..."></select> --}}
+                </div>
             </div>
         </div>
 
@@ -127,7 +144,7 @@
                 <div class="form-group">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-new img-thumbnail" style="width: 200px; height: 150px;">
-                            <img src="{{ ($post->image_url) }}" alt="...">
+                            <img src="{{ ($post->image_url) ?: 'https://place-hold.it/150x200?text=No-Image&italic&bold' }}" alt="...">
                         </div>
                         <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px; max-height: 150px;">
                         </div>

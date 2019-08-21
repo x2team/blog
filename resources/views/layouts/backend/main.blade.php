@@ -32,12 +32,12 @@
     <!-- Custom by BeeSupper -->
     <link rel="stylesheet" href="{{ asset('backend/dist/css/custom.css') }}">
 
-    @yield('style')
+    <link rel="stylesheet" href="https://yaireo.github.io/tagify/dist/tagify.css">
     
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     
-
+    @yield('style')
 
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -114,7 +114,7 @@
     <!-- Summernote 0.8.12 -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
     
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script> 
     
     
 

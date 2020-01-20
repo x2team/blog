@@ -29,6 +29,7 @@ class PostsTableSeeder extends Seeder
             // $createdDate   = clone($date);
 
             $posts[] = [
+                'uuid'  => (string) Str::uuid(),
                 'author_id'    => rand(1, 3),
                 'title'        => $faker->sentence(rand(8, 12)),
                 'excerpt'      => $faker->text(rand(250, 300)),

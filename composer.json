@@ -16,7 +16,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",
         "santigarcor/laratrust": "5.2.*",
-        "unisharp/laravel-filemanager": "^1.9"
+        "unisharp/laravel-filemanager": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

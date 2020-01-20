@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title', 'My Blog')</title>
+    <title>@yield('title', 'Dashboard Movie')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,7 +24,7 @@
     <!-- Bootstrap datepicker 1.9.0 -->
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.css"> --}}
     <!-- daterangePicker 3.0.5 -->
-    <link rel="stylesheet" href="{{ asset('backend/plugins/daterangepicker/daterangepicker.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('backend/plugins/daterangepicker/daterangepicker.css') }}"> --}}
     <!-- Jasnybootstrap 4.0.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css">
     <!-- Summernote 0.8.12 -->
@@ -91,7 +91,7 @@
     <script src="{{ asset('backend/plugins/moment/moment.min.js') }}"></script>
 
     <!-- daterangePicker 3.0.5 -->
-    <script src="{{ asset('backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    {{-- <script src="{{ asset('backend/plugins/daterangepicker/daterangepicker.js') }}"></script> --}}
     <!-- Bootstrap datepicker 1.9.0  -->
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> --}}
 

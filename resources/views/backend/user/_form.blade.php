@@ -31,7 +31,8 @@
                     <span class="invalid-feedback">{{ $errors->first('email') }}</span>
                 @enderror
             </div>
-            <div class="form-group">
+            
+            {{-- <div class="form-group">
                 {{ Form::label('password') }}
                 {{ Form::password('password', ['class' => 'form-control ' . ($errors->has('password') ? 'is-invalid' : '')]) }}
                 @error('password')
@@ -44,7 +45,23 @@
                 @error('password_confirmation')
                     <span class="invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
                 @enderror
+            </div> --}}
+    
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" autocomplete="off" type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password">
+                @error('password')
+                    <span class="invalid-feedback">{{ $errors->first('password') }}</span>
+                @enderror
             </div>
+            <div class="form-group">
+                <label for="password_confirmation">Password Confirmation</label>
+                <input  name="password_confirmation" autocomplete="off" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="Password Confirmation">
+                @error('password_confirmation')
+                    <span class="invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
+                @enderror
+            </div>
+
 
             <div class="form-group">
                 {{ Form::label('role') }}

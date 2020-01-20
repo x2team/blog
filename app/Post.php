@@ -15,6 +15,21 @@ class Post extends Model
     protected $fillable = ['title', 'slug', 'excerpt', 'body', 'published_at', 'category_id', 'image', 'image_path'];
     protected $dates = ['published_at'];
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
+    }
+
+
+
+
+
+
     public function author()
     {
         return $this->belongsTo(User::class);
@@ -27,6 +42,13 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+
+
+
+
+
+
 
     public function setPublishedAtAttribute($value)
     {
@@ -168,6 +190,7 @@ class Post extends Model
 
     public function scopeFilter($query, $filter)
     {
+        // dd($filter);
         if(isset($filter['month']) && $month = $filter['month']){
             $query->whereMonth('published_at', Carbon::parse($month)->month);
         }

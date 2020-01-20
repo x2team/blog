@@ -85,7 +85,7 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         
         $data = $this->handleRequest2($request);
@@ -207,7 +207,7 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         // dd($request->all());die;
 
@@ -234,6 +234,7 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
+        // dd($id);
         $post = Post::findOrFail($id)->delete();
         
         return redirect('/backend/blog')->with('trash-message', ['Your post moved to Trash', $id]);

@@ -20,6 +20,7 @@
 
                         <div class="post-meta no-border">
                             <ul class="post-meta-group">
+                                <li>{{ $post->view_count }}</li>
                                 <li><i class="fa fa-user"></i><a href="{{ route('blog.show', $post->slug) }}">{{ $post->author->name }}</a></li>
                                 <li><i class="fa fa-clock-o"></i><time>{{ $post->date }}</time></li>
                                 <li><i class="fa fa-folder"></i><a href="{{ route('blog.category', $post->category->slug) }}"> {{ $post->category->title }}</a></li>

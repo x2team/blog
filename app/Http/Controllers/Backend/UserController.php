@@ -44,6 +44,7 @@ class UserController extends BackendController
      */
     public function store(Requests\UserStoreRequest $request)
     {
+        // dd($request->all());
         $user = User::create($request->all());
         $user->attachRole($request->role);
 
@@ -83,9 +84,10 @@ class UserController extends BackendController
      */
     public function update(Requests\UserUpdateRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->update( !isset($request->password) ? $request->except(['password']) : $request->all());
+        $user = User::findOrFail($id);      
 
+        $user->update( !isset($request->password) ? $request->except(['password']) : $request->all());
+        
         $user->detachRoles();
         $user->attachRole($request->role);
         
